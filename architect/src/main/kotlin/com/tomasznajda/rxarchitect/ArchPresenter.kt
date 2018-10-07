@@ -1,10 +1,10 @@
 package com.tomasznajda.rxarchitect
 
 import android.arch.lifecycle.ViewModel
-import android.provider.Telephony
-import android.util.Log
 import com.tomasznajda.rxarchitect.interfaces.ArchView
 import com.tomasznajda.rxarchitect.interfaces.ArchViewModel
+import com.tomasznajda.rxarchitect.util.Disposables
+import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -18,16 +18,13 @@ abstract class ArchPresenter<ViewT : ArchView, ModelT : ArchViewModel<*>>(initMo
     private var _view: WeakReference<ViewT>? = null
     private val modelChanges = BehaviorSubject.createDefault(initModel)
     private var created = false
-    private val disposables = CompositeDisposable()
-    private val viewRelatedDisposables = CompositeDisposable()
+    private val disposables = mapOf(Disposables.VIEW to CompositeDisposable(),
+                                    Disposables.PRESENTER to CompositeDisposable())
 
     protected val view: ViewT?
         get() = _view?.get()
-    protected open var model: ModelT = initModel
-        set(value) {
-            field = value
-            modelChanges.onNext(value)
-        }
+    protected var model: ModelT = initModel
+        private set
 
     protected open fun created() = Unit
 
@@ -37,9 +34,22 @@ abstract class ArchPresenter<ViewT : ArchView, ModelT : ArchViewModel<*>>(initMo
 
     protected open fun destroyed() = Unit
 
-    protected fun Disposable.saveAsViewRelated() = addTo(viewRelatedDisposables)
+    protected fun Disposable.save(disposables: Disposables) = addTo(this@ArchPresenter.disposables[disposables]!!)
 
-    protected fun Disposable.save() = addTo(disposables)
+    protected fun <T> Flowable<T>.subscribe(disposables: Disposables) = subscribe().save(disposables)
+
+    protected fun <T> Observable<T>.subscribe(disposables: Disposables) = subscribe().save(disposables)
+
+    protected fun <T> Maybe<T>.subscribe(disposables: Disposables) = subscribe().save(disposables)
+
+    protected fun <T> Single<T>.subscribe(disposables: Disposables) = subscribe().save(disposables)
+
+    protected fun Completable.subscribe(disposables: Disposables) = subscribe().save(disposables)
+
+    protected fun update(model: ModelT, render: Boolean = true) {
+        this.model = model
+        modelChanges.onNext(model)
+    }
 
     internal fun attachView(view: ViewT) {
         _view = WeakReference(view)
@@ -50,21 +60,21 @@ abstract class ArchPresenter<ViewT : ArchView, ModelT : ArchViewModel<*>>(initMo
     }
 
     internal fun detachView() {
-        viewRelatedDisposables.clear()
+        disposables[Disposables.VIEW]?.clear()
         _view?.clear()
         _view = null
         detached()
     }
 
     override fun onCleared() {
-        disposables.clear()
+        disposables[Disposables.PRESENTER]?.clear()
         destroyed()
     }
 
     internal fun observe(observer: (ModelT) -> Unit) {
         modelChanges
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { observer(it) }
-                .saveAsViewRelated()
+                .doOnNext(observer)
+                .subscribe(Disposables.VIEW)
     }
 }

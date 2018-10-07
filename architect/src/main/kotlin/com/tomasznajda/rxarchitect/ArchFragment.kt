@@ -30,13 +30,14 @@ abstract class ArchFragment<ViewT : ArchView>(@LayoutRes private val layoutId: I
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
             inflater.inflate(layoutId, container, false)!!
 
+    @Suppress("UNCHECKED_CAST")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         injectViews()
-        delegate.onCreate(ViewModelProviders.of(this))
+        delegate.attach(this as ViewT, ViewModelProviders.of(this))
     }
 
     override fun onDestroyView() {
-        delegate.onDestroy(ViewModelProviders.of(this))
+        delegate.detach(ViewModelProviders.of(this))
         super.onDestroyView()
     }
 }

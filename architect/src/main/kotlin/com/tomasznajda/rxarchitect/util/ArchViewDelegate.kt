@@ -6,29 +6,29 @@ import com.tomasznajda.rxarchitect.interfaces.ArchView
 import com.tomasznajda.rxarchitect.interfaces.ArchViewModel
 import kotlin.reflect.KClass
 
-@Suppress("UNCHECKED_CAST")
 internal class ArchViewDelegate<ViewT : ArchView> {
 
     private val presenters = ArchPresentersHolder<ViewT>()
 
-    internal fun onCreate(modelProvider: ViewModelProvider) {
-        observeModels(modelProvider)
-        attachPresenters(modelProvider)
+    internal fun attach(view: ViewT, modelProvider: ViewModelProvider) {
+        observeModels(view, modelProvider)
+        attachPresenters(view, modelProvider)
     }
 
-    internal fun onDestroy(modelProvider: ViewModelProvider) {
+    internal fun detach(modelProvider: ViewModelProvider) {
         detachPresenters(modelProvider)
     }
 
+    @Suppress("UNCHECKED_CAST")
     internal fun <PresenterT : ArchPresenter<ViewT, *>> inject(presenterClass: KClass<PresenterT>) {
         presenters.addClass(presenterClass as KClass<ArchPresenter<ViewT, ArchViewModel<ViewT>>>)
     }
 
-    private fun observeModels(modelProvider: ViewModelProvider) =
-            presenters.forEach(modelProvider) { it.observe { model -> model.render(this as ViewT) } }
+    private fun observeModels(view: ViewT, modelProvider: ViewModelProvider) =
+            presenters.forEach(modelProvider) { it.observe { model -> model.render(view) } }
 
-    private fun attachPresenters(modelProvider: ViewModelProvider) =
-            presenters.forEach(modelProvider) { it.attachView(this as ViewT) }
+    private fun attachPresenters(view: ViewT, modelProvider: ViewModelProvider) =
+            presenters.forEach(modelProvider) { it.attachView(view) }
 
     private fun detachPresenters(modelProvider: ViewModelProvider) =
             presenters.forEach(modelProvider) { it.detachView() }

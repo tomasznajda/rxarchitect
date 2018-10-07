@@ -20,16 +20,17 @@ abstract class ArchActivity<ViewT : ArchView>(@LayoutRes private val layoutId: I
 
     open fun injectViews() = Unit
 
+    @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId)
         injectPresenters()
         injectViews()
-        delegate.onCreate(ViewModelProviders.of(this))
+        delegate.attach(this as ViewT, ViewModelProviders.of(this))
     }
 
     override fun onDestroy() {
-        delegate.onDestroy(ViewModelProviders.of(this))
+        delegate.detach(ViewModelProviders.of(this))
         super.onDestroy()
     }
 }
