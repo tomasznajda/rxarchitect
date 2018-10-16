@@ -48,7 +48,7 @@ abstract class ArchPresenter<ViewT : ArchView, ModelT : ArchViewModel<*>>(initMo
 
     protected fun update(model: ModelT, render: Boolean = true) {
         this.model = model
-        modelChanges.onNext(model)
+        if (render) modelChanges.onNext(model)
     }
 
     internal fun attachView(view: ViewT) {
