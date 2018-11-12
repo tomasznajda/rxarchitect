@@ -20,5 +20,5 @@ internal class ArchPresentersHolder<ViewT : ArchView> {
 
     private fun get(modelProvider: ViewModelProvider,
                     presenterClass: KClass<ArchPresenter<ViewT, ArchViewModel>>) =
-            modelProvider.get(presenterClass.java.name, presenterClass.java)
+            modelProvider.get(presenterClass.java)
 }

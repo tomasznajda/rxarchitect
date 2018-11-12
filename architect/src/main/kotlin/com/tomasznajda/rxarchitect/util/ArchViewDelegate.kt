@@ -12,7 +12,7 @@ internal class ArchViewDelegate<ViewT : ArchView> {
     private val presenters = ArchPresentersHolder<ViewT>()
 
     @Suppress("UNCHECKED_CAST")
-    internal fun <PresenterT : ArchPresenter<ViewT, *>> inject(presenterClass: KClass<PresenterT>) {
+    internal fun <PresenterT : ArchPresenter<ViewT, *>> addPresenter(presenterClass: KClass<PresenterT>) {
         presenters.addClass(presenterClass as KClass<ArchPresenter<ViewT, ArchViewModel>>)
     }
 
