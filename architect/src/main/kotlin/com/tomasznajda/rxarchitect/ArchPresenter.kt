@@ -36,15 +36,7 @@ abstract class ArchPresenter<ViewT : ArchView, ModelT : ArchViewModel<*>>(initMo
 
     protected fun Disposable.save(disposables: Disposables) = addTo(this@ArchPresenter.disposables[disposables]!!)
 
-    protected fun <T> Flowable<T>.subscribe(disposables: Disposables) = subscribe().save(disposables)
-
-    protected fun <T> Observable<T>.subscribe(disposables: Disposables) = subscribe().save(disposables)
-
-    protected fun <T> Maybe<T>.subscribe(disposables: Disposables) = subscribe().save(disposables)
-
-    protected fun <T> Single<T>.subscribe(disposables: Disposables) = subscribe().save(disposables)
-
-    protected fun Completable.subscribe(disposables: Disposables) = subscribe().save(disposables)
+    protected fun <ScopeT : ArchScope> get(scope: KClass<ScopeT>) = ArchScopeStore.get(this, scope)
 
     protected fun update(model: ModelT, render: Boolean = true) {
         this.model = model
@@ -75,6 +67,7 @@ abstract class ArchPresenter<ViewT : ArchView, ModelT : ArchViewModel<*>>(initMo
         modelChanges
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(observer)
-                .subscribe(Disposables.VIEW)
+                .subscribe()
+                .save(Disposables.VIEW)
     }
 }
