@@ -1,6 +1,8 @@
 package com.tomasznajda.rxarchitect.interfaces
 
-interface ArchViewModel<ViewT : ArchView> {
+import android.view.View
 
-    fun render(view: ViewT)
+interface ArchViewModel {
+
+    fun render(view: View)
 }

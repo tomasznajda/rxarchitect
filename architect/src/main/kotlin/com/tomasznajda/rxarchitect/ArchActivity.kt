@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.tomasznajda.rxarchitect.interfaces.ArchView
 import com.tomasznajda.rxarchitect.util.ArchViewDelegate
 import kotlin.reflect.KClass
@@ -26,6 +27,7 @@ abstract class ArchActivity<ViewT : ArchView>(@LayoutRes private val layoutId: I
         setContentView(layoutId)
         injectPresenters()
         injectViews()
+        delegate.observe(findViewById<View>(android.R.id.content), ViewModelProviders.of(this))
         delegate.attach(this as ViewT, ViewModelProviders.of(this))
     }
 

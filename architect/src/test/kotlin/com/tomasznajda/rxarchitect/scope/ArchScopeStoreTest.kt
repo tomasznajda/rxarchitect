@@ -1,5 +1,6 @@
 package com.tomasznajda.rxarchitect.scope
 
+import android.view.View
 import com.tomasznajda.ktx.junit.assertEquals
 import com.tomasznajda.ktx.junit.assertIsInstanceOf
 import com.tomasznajda.rxarchitect.ArchPresenter
@@ -12,14 +13,14 @@ import kotlin.reflect.KClass
 
 class ArchScopeStoreTest {
 
-    class ViewModel : ArchViewModel<ArchView> {
-        override fun render(view: ArchView) = Unit
+    class ViewModel : ArchViewModel {
+        override fun render(view: View) = Unit
     }
 
     class FirstScope : ArchScope
     class SecondScope : ArchScope
-    class FirstPresenter : ArchPresenter<ArchView, ArchViewModel<*>>(ViewModel())
-    class SecondPresenter : ArchPresenter<ArchView, ArchViewModel<*>>(ViewModel())
+    class FirstPresenter : ArchPresenter<ArchView, ArchViewModel>(ViewModel())
+    class SecondPresenter : ArchPresenter<ArchView, ArchViewModel>(ViewModel())
 
     val firstPresenter = FirstPresenter()
     val secondPresenter = SecondPresenter()

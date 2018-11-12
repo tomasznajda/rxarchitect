@@ -14,7 +14,7 @@ import io.reactivex.subjects.BehaviorSubject
 import java.lang.ref.WeakReference
 import kotlin.reflect.KClass
 
-abstract class ArchPresenter<ViewT : ArchView, ModelT : ArchViewModel<*>>(initModel: ModelT)
+abstract class ArchPresenter<ViewT : ArchView, ModelT : ArchViewModel>(initModel: ModelT)
     : ViewModel() {
 
     private var _view: WeakReference<ViewT>? = null

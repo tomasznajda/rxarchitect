@@ -33,6 +33,7 @@ abstract class ArchFragment<ViewT : ArchView>(@LayoutRes private val layoutId: I
     @Suppress("UNCHECKED_CAST")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         injectViews()
+        delegate.observe(view, ViewModelProviders.of(this))
         delegate.attach(this as ViewT, ViewModelProviders.of(this))
     }
 
