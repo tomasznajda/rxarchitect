@@ -18,7 +18,7 @@ object ArchScopeStore {
     internal fun <ScopeT : ArchScope> get(presenter: ArchPresenter<*, *>,
                                           scope: KClass<ScopeT>): ScopeT {
         if (presenters[scope].orEmpty().contains(presenter).not())
-            throw IllegalArgumentException("${presenter.javaClass.simpleName} is not attached to $scope")
+            throw IllegalStateException("${presenter.javaClass.simpleName} is not attached to $scope")
         return get(scope)
     }
 

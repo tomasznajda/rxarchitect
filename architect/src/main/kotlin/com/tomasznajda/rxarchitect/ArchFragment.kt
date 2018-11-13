@@ -13,7 +13,8 @@ import com.tomasznajda.rxarchitect.util.ArchPresenterFactoriesHolder
 import com.tomasznajda.rxarchitect.util.ArchViewDelegate
 import kotlin.reflect.KClass
 
-abstract class ArchFragment<ViewT : ArchView>(@LayoutRes private val layoutId: Int) : Fragment() {
+abstract class ArchFragment<ViewT : ArchView>(@LayoutRes private val layoutId: Int)
+    : Fragment() {
 
     private val delegate = ArchViewDelegate<ViewT>()
     private val presenterFactoriesHolder by lazy { ArchPresenterFactoriesHolder(presenters) }

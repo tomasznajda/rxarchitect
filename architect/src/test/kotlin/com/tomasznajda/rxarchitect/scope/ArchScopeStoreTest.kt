@@ -98,8 +98,8 @@ class ArchScopeStoreTest {
         assertStoreContainsScope(FirstScope::class)
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun `get throws IllegalArgumentException when presenter is not attached to requested scope`() {
+    @Test(expected = IllegalStateException::class)
+    fun `get throws IllegalStateException when presenter is not attached to requested scope`() {
         ArchScopeStore.register(FirstScope::class, { FirstScope() }, singleton = true)
         ArchScopeStore.attach(firstPresenter, FirstScope::class)
         ArchScopeStore.get(secondPresenter, FirstScope::class)

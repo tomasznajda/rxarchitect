@@ -13,7 +13,7 @@ internal class ArchViewDelegate<ViewT : ArchView> {
 
     @Suppress("UNCHECKED_CAST")
     internal fun <PresenterT : ArchPresenter<ViewT, *>> addPresenter(presenterClass: KClass<PresenterT>) {
-        presenters.addClass(presenterClass as KClass<ArchPresenter<ViewT, ArchViewModel>>)
+        presenters.add(presenterClass as KClass<ArchPresenter<ViewT, ArchViewModel>>)
     }
 
     internal fun observe(view: View, modelProvider: ViewModelProvider) =

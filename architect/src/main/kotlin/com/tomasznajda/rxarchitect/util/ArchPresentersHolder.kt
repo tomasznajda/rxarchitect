@@ -8,10 +8,14 @@ import kotlin.reflect.KClass
 
 internal class ArchPresentersHolder<ViewT : ArchView> {
 
-    private var presenters = emptyList<KClass<ArchPresenter<ViewT, ArchViewModel>>>()
+    internal var presenters = emptyList<KClass<ArchPresenter<ViewT, ArchViewModel>>>()
 
-    fun addClass(presenter: KClass<ArchPresenter<ViewT, ArchViewModel>>) {
-        presenters = presenters.toMutableList().apply { add(presenter) }.toList()
+    @Suppress("UNCHECKED_CAST")
+    fun <PresenterT : ArchPresenter<ViewT, ArchViewModel>> add(presenter: KClass<PresenterT>) {
+        presenters = presenters
+                .toMutableList()
+                .apply { add(presenter as KClass<ArchPresenter<ViewT, ArchViewModel>>) }
+                .toList()
     }
 
     fun forEach(modelProvider: ViewModelProvider,
