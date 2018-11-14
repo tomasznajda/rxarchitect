@@ -28,7 +28,7 @@ abstract class ArchFragment<ViewT : ArchView>(@LayoutRes private val layoutId: I
     @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenters.forEach { delegate.addPresenter(it as KClass<ArchPresenter<ViewT, *>>) }
+        presenters.keys.forEach { delegate.addPresenter(it as KClass<ArchPresenter<ViewT, *>>) }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =

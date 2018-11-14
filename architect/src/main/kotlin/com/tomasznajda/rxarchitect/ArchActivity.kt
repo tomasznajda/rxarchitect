@@ -27,7 +27,7 @@ abstract class ArchActivity<ViewT : ArchView>(@LayoutRes private val layoutId: I
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId)
-        presenters.forEach { delegate.addPresenter(it as KClass<ArchPresenter<ViewT, *>>) }
+        presenters.keys.forEach { delegate.addPresenter(it as KClass<ArchPresenter<ViewT, *>>) }
         injectViews()
         delegate.observe(findViewById<View>(android.R.id.content), viewModelProvider)
         delegate.attach(this as ViewT, viewModelProvider)
