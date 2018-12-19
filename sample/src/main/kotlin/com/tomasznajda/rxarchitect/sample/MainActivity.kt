@@ -2,7 +2,6 @@ package com.tomasznajda.rxarchitect.sample
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.tomasznajda.rxarchitect.R
 
 class MainActivity : AppCompatActivity() {
 
