@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">rxarchitect</string>
+
+    <string name="notes_empty">Your notes will appear here</string>
+    <string name="notes_create">Create note…</string>
+    <string name="notes_category_pinned">Pinned</string>
+    <string name="notes_category_others">Others</string>
+
+    <string name="single_note_name_hint">Name</string>
+    <string name="single_note_content_hint">Note</string>
+    <string name="single_note_last_modification">Last modification %1$s</string>
 </resources>

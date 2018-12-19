@@ -10,6 +10,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0.0"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -21,11 +22,47 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += "src/test/kotlin"
     }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+    androidExtensions {
+        experimental = true
+    }
+    testOptions {
+        unitTests {
+            returnDefaultValues = true
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+
     implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    implementation "io.reactivex.rxjava2:rxjava:2.2.2"
+    implementation "io.reactivex.rxjava2:rxkotlin:2.2.0"
+
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:2.2.0"
+
+    implementation "com.tomasznajda.simplerecyclerview:simplerecyclerview:1.1.0"
+    implementation "com.tomasznajda.ktx:android:1.2.0"
+    implementation "com.tomasznajda.ktx:kotlin:1.2.0"
+    implementation "com.tomasznajda.ktx:rxjava2:1.1.0"
+
+    implementation "net.danlew:android.joda:2.10.1"
+
+    implementation project(":architect")
+
+    testImplementation "junit:junit:4.12"
+    testImplementation 'com.android.support.test:rules:1.0.2'
+    testImplementation 'com.android.support.test:runner:1.0.2'
+    testImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0"
+    testImplementation "org.robolectric:robolectric:4.0.2"
+    testImplementation "com.tomasznajda.ktx:junit:1.0.0"
 }

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            app:srcCompat="@drawable/ic_back"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:ignore="ContentDescription"/>
+
+    <ImageView
+            android:id="@+id/btnPin"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            app:srcCompat="@drawable/ic_dislike"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/btnDelete"
+            tools:ignore="ContentDescription"/>
+
+    <ImageView
+            android:id="@+id/btnUnpin"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            app:srcCompat="@drawable/ic_like"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/btnDelete"
+            android:visibility="gone"
+            tools:ignore="ContentDescription"/>
+
+    <ImageView
+            android:id="@+id/btnDelete"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            app:srcCompat="@drawable/ic_trash"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:ignore="ContentDescription"/>
+
+    <EditText
+            android:fontFamily="@font/poppins_bold"
+            android:id="@+id/fldName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:inputType="text"
+            android:hint="@string/single_note_name_hint"
+            android:textColorHint="@color/gray_2"
+            android:textSize="18dp"
+            android:textColor="@color/gray_3"
+            android:background="@null"
+            app:layout_constraintTop_toBottomOf="@+id/btnBack"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:ignore="Autofill,SpUsage"/>
+
+    <EditText
+            android:fontFamily="@font/poppins_regular"
+            android:id="@+id/fldContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:inputType="text"
+            android:hint="@string/single_note_content_hint"
+            android:textColorHint="@color/gray_2"
+            android:textSize="14dp"
+            android:textColor="@color/gray_3"
+            android:background="@null"
+            app:layout_constraintTop_toBottomOf="@+id/fldName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:ignore="Autofill,SpUsage"/>
+
+    <TextView
+            android:fontFamily="@font/poppins_regular"
+            android:id="@+id/txtModificationTime"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center"
+            android:text="@string/single_note_last_modification"
+            android:textSize="12dp"
+            android:textColor="@color/gray_3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:ignore="SpUsage"/>
+
+    <ImageView
+            android:id="@+id/btnUndo"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="14dp"
+            app:srcCompat="@drawable/ic_undo"
+            android:tint="@drawable/enable_disable_color"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/btnRedo"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:ignore="ContentDescription"/>
+
+    <ImageView
+            android:id="@+id/btnRedo"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="14dp"
+            app:srcCompat="@drawable/ic_redo"
+            android:tint="@drawable/enable_disable_color"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/btnUndo"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:ignore="ContentDescription"/>
+
+    <android.support.constraint.Group
+            android:id="@+id/groupHistoryButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="btnUndo,btnRedo"/>
+
+</android.support.constraint.ConstraintLayout>
