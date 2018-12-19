@@ -47,22 +47,37 @@ abstract class ArchPresenter<ViewT : ArchView, ModelT : ArchViewModel>(initModel
     protected fun <ScopeT : ArchScope> get(scope: KClass<ScopeT>) = ArchScopeStore.get(this, scope)
 
     internal fun attachView(view: ViewT) {
-        _view = WeakReference(view)
-        if (created.not()) {
-            attachToScopes()
-            created(); created = true
-        }
-        attached()
+        if (created.not()) create()
+        attach(view)
     }
 
     internal fun detachView() {
+        detach()
+    }
+
+    override fun onCleared() {
+        destroy()
+    }
+
+    internal fun create() {
+        attachToScopes()
+        created()
+        created = true
+    }
+
+    internal fun attach(view: ViewT) {
+        _view = WeakReference(view)
+        attached()
+    }
+
+    internal fun detach() {
         disposables[Disposables.VIEW]?.clear()
         _view?.clear()
         _view = null
         detached()
     }
 
-    override fun onCleared() {
+    internal fun destroy() {
         disposables[Disposables.PRESENTER]?.clear()
         detachFromScopes()
         destroyed()
